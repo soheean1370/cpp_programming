@@ -1,4 +1,4 @@
-#include <cstring>
+#include <string.h>
 #include <iostream>
 
 using namespace std;
@@ -27,16 +27,16 @@ private:
     char* str;
 public:
     MyString(const char* _str = "") : str(new char[strlen(_str) + 1]) {
-        strcpy(str, _str);
+        strcpy_s(str, strlen(_str) + 1, _str);
     }
     MyString(const MyString& s) : str(new char[strlen(s.str) + 1]) {
-        strcpy(str, s.str);
+        strcpy_s(str, strlen(s.str) + 1, s.str);
     }
     MyString& operator=(const MyString& s) {
         if (this != &s) {
             delete[] str;
             str = new char[strlen(s.str) + 1];
-            strcpy(str, s.str);
+            strcpy_s(str, strlen(s.str) + 1, s.str);
         }
         return *this;
     }
@@ -93,7 +93,8 @@ public:
         if (count < size) {
             items[count] = item;
             count++;
-        } else {
+        }
+        else {
             std::cerr << "List is full, cannot add more items." << std::endl;
         }
     }
@@ -118,10 +119,10 @@ ostream& operator<<(ostream& os, const List<T>& list) {
 }
 
 int main() {
-    List<Complex> cList(100) ;
+    List<Complex> cList(100);
 
-    cList.add(Complex(0, 0)) ;
-    cList.add(Complex(1, 1)) ;
+    cList.add(Complex(0, 0));
+    cList.add(Complex(1, 1));
     cout << cList;
 
 
@@ -129,22 +130,21 @@ int main() {
     cout << cList.find(Complex(1, 1)) << endl;	// true
     cout << cList.find(Complex(1, 0)) << endl;	// false
 
-    List<MyString> sList(200) ;
+    List<MyString> sList(200);
 
-    sList.add("abc") ;
-    sList.add("def") ;
+    sList.add("abc");
+    sList.add("def");
     cout << sList;
     cout << sList.find("def") << endl;	// true
     cout << sList.find("Aef") << endl;	// false
 
-    List<MyString> s2List(sList) ;
-    s2List.add("ghi") ;
+    List<MyString> s2List(sList);
+    s2List.add("ghi");
     cout << s2List;
 
-    List<MyString> s3List(10) ;
-    s3List = s2List ;
+    List<MyString> s3List(10);
+    s3List = s2List;
     s3List.add("jkl");
     cout << s3List;
 };
-
 
